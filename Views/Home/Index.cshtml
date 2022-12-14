@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    string alt_image = "https://i1.wp.com/insatpress.tn/wp-content/uploads/2020/04/44104159_2181495298587811_5543566004648411136_o.jpg?resize=1000%2C600&ssl=1";
+}
+@model List<Event>
+
+<div class="row">
+    <div class="col-sm-6">
+        <h1 class="display-4">Insat Events 🔥</h1>
+        <p class="lead my2">Find all recent events</p>
+        <h3 class="my-2">
+            <a asp-area="" asp-controller="clubs" asp-action="search">
+                <button type="button" class="btn btn-danger btn-lg">Find a Club</button>
+            </a>
+            <a asp-area="" asp-controller="clubs" asp-action="add">
+                <type ="button" class="btn btn-light btn-lg">Post a Club</button>
+            </a>
+        </h3>
+        <p class="lead">Publicize about your events.</p>
+        <h3 class="my-2">
+            <a asp-area="" asp-controller="events" asp-action="search">
+                <button type="button" class="btn btn-danger btn-lg">Find an Event</button>
+            </a>
+            <a asp-area="" asp-controller="events" asp-action="add">
+                <type ="button" class="btn btn-light btn-lg">Post an Event</button>
+            </a>
+        </h3>
+    </div>
+    <div class="col-sm-6 hidden-sm hidden-xs">
+        <img id="front-splash" src=@alt_image
+             alt="Front Photo" style="height:250px; width:400px;" />
+    </div>
+</div>
+
+
+<h3 class="lead mt-lg-5">
+    Coming Soon
+</h3>
+
+<div class="row justify-content-center">
+    <div id="carousel" class="carousel slide" data-ride="carousel">
+
+        <div class="carousel-inner">
+            @foreach (var e in Model)
+            {
+                <div class="@("carousel-item " + (Model.First() == e ? "active" : ""))">
+                    <img class="d-block" style="height:500px; width:1000px;" src=@(e.image!=""? e.image : alt_image) alt="">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="text-black-50">
+                            <a href="events/@e.id">@e.name</a>
+                        </h5>
+                        <p class="text-black-50">Happening the @e.date.ToString("dd-MM-yyyy") @(e.date.ToString("HH:mm")!="00:00"? " starts at "+ e.date.ToString("HH:mm"): "") </p>
+                    </div>
+                </div>
+            }
+        </div>
+
+            <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+
+<style>
+    .carousel > a
+    {
+        color: #dc3545;
+    }
+</style>

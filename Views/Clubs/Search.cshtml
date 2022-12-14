@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Search Club";
+}
+
+    <h2 class="display-4">Search for a Club!!</h2>
+    <div class="row">
+        <div class="col-12 justify-content-center">
+            <section id="searchForm">
+                @using (Html.BeginForm("Search", "Clubs", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <hr />
+                    <div class="form-group">
+                        @Html.Label("name", "Enter the club name: ", new { @class = "control-label lead" })
+                        <div class="col-md-10">
+                            @Html.TextBox("name", "", new { @class = "form-control form-control-lg" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p class="lead">Starting Year: </p>
+                        <div class="col-md-10">
+                            @Html.Label("createdFrom", "From : ", new { placeholder = "yyyy", @class = "control-label" })
+                            @Html.TextBox("createdFrom", "", htmlAttributes: new { @class = "form-control form-control-lg" })
+                        </div>
+                        <div class="col-md-10">
+                            @Html.Label("createdTo", "To : ", new { @class = "control-label", placeholder = "yyyy" })
+                            @Html.TextBox("createdTo", "", htmlAttributes: new { @class = "form-control form-control-lg" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Search" class="btn btn-danger btn-lg" />
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+    </div>

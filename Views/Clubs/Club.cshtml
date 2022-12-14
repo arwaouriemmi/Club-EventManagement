@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Clubs";
+    string alt_image = "https://i1.wp.com/insatpress.tn/wp-content/uploads/2020/04/44104159_2181495298587811_5543566004648411136_o.jpg?resize=1000%2C600&ssl=1";
+
+}
+
+
+<div class="row">
+    <div class="col-6">
+        <h1 class="monospace">
+            {{ venue.name }}
+        </h1>
+        <p class="subtitle">
+            ID: {{ venue.id }}
+        </p>
+        <div class="btn btn-info d-block col-3">
+            <span>{{ genre }}</span>
+        </div>
+        <a href="/venues/{{ venue.id }}/edit"><button class="btn btn-danger btn-lg">Edit</button></a>
+        <button id="delete" class="btn btn-danger btn-lg" data-id="{{ venue.id }} ">Delete</button>
+    </div>
+    <div class="col-6">
+        <img src="{{ venue.image_link }}" alt="Venue Image" />
+    </div>
+</div>
+
+<h3 class="display-4">
+    Members
+</h3>
+<div class="row">
+    <div class="d-flex justify-content-around flex-wrap">
+
+        <div class="card mb-5" style="width: 18rem;">
+            <div class="card-body h-auto" style="height: 20rem;">
+                <h5 class="card-title">c.name</h5>
+                <p class="card-text">Role </p>
+            </div>
+        </div>
+
+        <div class="card mb-5" style="width: 18rem;">
+            <div class="card-body h-auto" style="height: 20rem;">
+                <h5 class="card-title">c.name</h5>
+                <p class="card-text"> Role </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<h3 class="display-4">
+                Events
+</h3>
+<div class="row">
+    <div class="d-flex justify-content-around flex-wrap">
+
+        <div class="card mb-5" style="width: 18rem;">
+            <img class="card-img-top" style="height: 20rem; width:100%;" src=@(alt_image) alt="event image">
+            <div class="card-body h-auto" style="height: 20rem;">
+                <h5 class="card-title">c.name</h5>
+                <p class="card-text">Happening the (c.date.ToString("dd-MM-yyyy") + (c.date.ToString("HH:mm")!="00:00" ? " starts at "+ c.date.ToString("HH:mm") : ""))</p>
+                <a href="/clubs/c.id" class="btn btn-danger">See Details</a>
+            </div>
+        </div>
+
+        <div class="card mb-5" style="width: 18rem;">
+            <img class="card-img-top" style="height: 20rem; width:100%;" src=@(alt_image) alt="event image">
+            <div class="card-body h-auto" style="height: 20rem;">
+                <h5 class="card-title">c.name</h5>
+                <p class="card-text">Happening the (c.date.ToString("dd-MM-yyyy") + (c.date.ToString("HH:mm")!="00:00" ? " starts at "+ c.date.ToString("HH:mm") : ""))</p>
+                <a href="/clubs/c.id" class="btn btn-danger">See Details</a>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Events";
+    int count = ViewBag.pageCount;
+    int page = ViewBag.page;
+    string alt_image = "https://i1.wp.com/insatpress.tn/wp-content/uploads/2020/04/44104159_2181495298587811_5543566004648411136_o.jpg?resize=1000%2C600&ssl=1";
+}
+@model List<Event>
+
+<h1 class="display-4 mt-lg-5">
+    Events
+</h1>
+@if (ViewBag.name != null)
+{
+    <h3 class="lead">
+        Results for: @ViewBag.name, ViewBag.club, ViewBag.category from: @ViewBag.from to: @ViewBag.to
+    </h3>
+}
+<div class="d-flex justify-content-around flex-wrap">
+    @foreach (var c in Model)
+    {
+        <div class="card mb-5" style="width: 18rem;">
+            <img class="card-img-top" style="height: 20rem; width:100%;" src=@(c.image!=""? c.image: alt_image) alt="event image">
+            <div class="card-body h-auto" style="height: 20rem;">
+                <h5 class="card-title">@c.name</h5>
+                <p class="card-text">Happening the @(c.date.ToString("dd-MM-yyyy") + (c.date.ToString("HH:mm")!="00:00" ? " starts at "+ c.date.ToString("HH:mm") : ""))</p>
+                <a href="/clubs/@c.id" class="btn btn-danger">See Details</a>
+            </div>
+        </div>
+    }
+</div>
+
+<nav aria-label="Page navigation" class="justify-content-center mb-lg-5">
+    <ul class="pagination pagination-md justify-content-center mb-lg-1">
+        <li class="page-item">
+            @if (page > 1)
+            {
+                <a class="page-link" asp-area="" asp-controller="events" asp-action="index" asp-route-page=@(page-1) aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            }
+        </li>
+        @for (int i = 1; i <= count; i++)
+        {
+            <li class="@("page-item " + (page == i ? "act" : ""))"><a class="page-link" asp-area="" asp-controller="events" asp-action="index" asp-route-page=@i>@i</a></li>
+        }
+        @if (page < count)
+        {
+            <li class="page-item">
+                <a class="page-link" style:"" asp-area="" asp-controller="events" asp-action="index" asp-route-page=@(page+1) aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
+
+
+
+<style>
+
+    .pagination > li > a {
+        background-color: white;
+        color: #dc3545;
+    }
+
+        .pagination > li > a:focus,
+        .pagination > li > a:hover,
+        .pagination > li > span:focus,
+        .pagination > li > span:hover {
+            color: #dc3545;
+            background-color: #eee;
+            border-color: #ddd;
+        }
+
+    .pagination > .act > a {
+        background-color: #dc3545;
+        border: solid 1px #dc3545;
+        color: white;
+    }
+
+        .pagination > .act > a:hover {
+            background-color: darkred;
+            border: solid 1px #dc3545;
+            color: white;
+        }
+</style>
