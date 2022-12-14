@@ -10,10 +10,10 @@ namespace FrameworksProject.Controllers
 {
     public class HomeController : Controller
     {
-        private UnitOfWork unit = new UnitOfWork(ApplicationContext.Context);
+        private readonly UnitOfWork unit = new UnitOfWork();
         public ViewResult Index()
         {
-            List<Event> events = unit.Events.FindByCondition(e=> DateTime.Compare(e.date, DateTime.Now) > 0).ToList();
+            List<Event> events = unit.Events.FindByCondition(e=> DateTime.Compare(e.Date, DateTime.Now) > 0).ToList();
             return View(events);
         } 
     }

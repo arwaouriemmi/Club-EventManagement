@@ -5,13 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FrameworksProject.Controllers
 {
     public class ClubsController : Controller
     {
-        UnitOfWork unit = new UnitOfWork(ApplicationContext.Context);
+        private readonly IUnitOfWork unit = new UnitOfWork();
+
+        public ClubsController(IUnitOfWork @object) => unit = @object;
 
         public ViewResult Index([FromQuery] int? page)
         {
@@ -23,24 +24,24 @@ namespace FrameworksProject.Controllers
             List<Club> clubs = unit.Clubs.FindRange((page.Value - 1) * 6, 6).ToList();
             ViewBag.page = page;
             ViewBag.pageCount = pageCount;
-            return View(clubs);
+            return View("Index", clubs);
 
         }
         [Route("clubs/{id}")]
         public ViewResult Club(int id)
         {
-            return View();
+            return View("Club");
         }
         
 
         [HttpGet]
         public ViewResult Search()
         {
-            return View();
+            return View("Search");
         }
 
         [HttpPost]
-        public IActionResult Search(string name, string createdFrom, string createdTo)
+        public ViewResult Search(string name, string createdFrom, string createdTo)
         {
             int from;
             int to;
@@ -53,15 +54,15 @@ namespace FrameworksProject.Controllers
             if ( from!=0 && (from < 1900 || from > 2022))
             {
                 ViewBag.error = "Invalid Year";
-                return View();
+                return View("Search");
             }
             if ( to !=0 && to < 1900)
             {
                 ViewBag.error = "Invalid Year";
-                return View();
+                return View("Search");
             }
 
-            ViewBag.name = name!=null? name : "";
+            ViewBag.name = name ?? "";
             ViewBag.from = createdFrom;
             ViewBag.to = createdTo;
 

@@ -17,17 +17,17 @@ namespace FrameworksProject.Data.Repositories
 
         public List<string> FindAllCategories()
         {
-            return _context.Event.Select(e => e.category).Distinct().ToList();
+            return _context.Event.Select(e => e.Category).Distinct().ToList();
         }
 
         public List<string> FindAllClubs()
         {
-            return _context.Event.Include( e=> e.club).Select(e => e.club.name).Distinct().ToList();
+            return _context.Event.Include( e=> e.Club).Select(e => e.Club.name).Distinct().ToList();
         }
 
         public IQueryable<Event> Search(string name, string category, string club, DateTime from, DateTime to) 
         {
-            IQueryable<Event> query = _context.Event.Include(e => e.club);
+            IQueryable<Event> query = _context.Event.Include(e => e.Club);
             Debug.WriteLine(name != null);
             Debug.WriteLine(category != "All");
             Debug.WriteLine(club != "All");
@@ -35,19 +35,19 @@ namespace FrameworksProject.Data.Repositories
             Debug.WriteLine(to.Year != 0001);
 
             if (category!="All")
-                query = query.Where(e => e.category == category);
+                query = query.Where(e => e.Category == category);
             
             if (name!=null)
-                query = query.Where(e => e.name.ToLower() == name.ToLower());
+                query = query.Where(e => e.Name.ToLower() == name.ToLower());
 
             if (club != "All")
-                query = query.Where(e => e.club.name == club);
+                query = query.Where(e => e.Club.name == club);
 
             if (from.Year!=0001)
-                query = query.Where(e => DateTime.Compare(e.date, from)>=0);
+                query = query.Where(e => DateTime.Compare(e.Date, from)>=0);
 
             if (to.Year != 0001)
-                query = query.Where(e => DateTime.Compare(e.date, to) <= 0);
+                query = query.Where(e => DateTime.Compare(e.Date, to) <= 0);
 
             return query;
         }

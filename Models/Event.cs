@@ -11,36 +11,35 @@ namespace FrameworksProject.Models
     public class Event
     {
         [Key]
-        public int id { get; set; }
-        public string name { get; set; }
-        public string category { get; set; }
-        public DateTime date { get; set; }
-        public string description { get; set; }
-        public string staffForm { get; set; }
-        public string participationForm { get; set; }
-        
-        public string image { get; set; }
-        public Club club { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public DateTime Date { get; set; }
+        public string Description { get; set; }
+        public string StaffForm { get; set; }
+        public string ParticipationForm { get; set; }    
+        public string Image { get; set; }
+        public Club Club { get; set; }
 
         public Event()
         {
         }
 
-        public Event(string name, string category, string date, string description, string staffForm, string participationForm, string image, Club club)
+        public Event(string name, string category, DateTime date, string description, string staffForm, string participationForm, string image, Club club)
         {
-            this.name = name;
-            this.category = category;
-            this.date = DateTime.Parse(date);
-            this.description = description;
-            this.staffForm = staffForm;
-            this.participationForm = participationForm;
-            this.image = image;
-            this.club = club;
+            this.Name = name;
+            this.Category = category;
+            this.Date = date;
+            this.Description = description;
+            this.StaffForm = staffForm;
+            this.ParticipationForm = participationForm;
+            this.Image = image;
+            this.Club = club;
         }
 
         public override string ToString()
         {
-            return "id: "+id.ToString() + " name: "+name + " category: "+ category+ " date: " + date.ToString() + " description: "+ description + " club : {"+ club.name +"}" ;
+            return "id: "+Id.ToString() + " name: "+Name + " category: "+ Category+ " date: " + Date.ToString() + " description: "+ Description + " club : {"+ Club.name +"}" ;
         }
     }
 }

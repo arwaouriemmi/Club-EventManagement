@@ -6,19 +6,37 @@ using System.Threading.Tasks;
 
 namespace FrameworksProject.Data.Infrastructure
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IDisposable, IUnitOfWork
     {
-        private readonly ApplicationContext _context;
+        private readonly ApplicationContext _context = ApplicationContext.Context;
 
-        public IClubRepository Clubs { get; }
-        public IEventRepository Events { get; }
+        public IClubRepository clubs;
+        public IEventRepository events;
 
-        public UnitOfWork(ApplicationContext context)
+        public IClubRepository Clubs
         {
-            this._context = context;
-            Clubs = new ClubRepository(context);
-            Events = new EventRepository(context);
+            get
+            {
 
+                if (this.clubs == null)
+                {
+                    this.clubs = new ClubRepository(_context);
+                }
+                return clubs;
+            }
+        }
+
+        public IEventRepository Events
+        {
+            get
+            {
+
+                if (this.events == null)
+                {
+                    this.events = new EventRepository(_context);
+                }
+                return events;
+            }
         }
 
         public bool Complete()
@@ -36,9 +54,24 @@ namespace FrameworksProject.Data.Infrastructure
             }
         }
 
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
         public void Dispose()
         {
-            _context.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

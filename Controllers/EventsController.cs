@@ -13,19 +13,21 @@ namespace FrameworksProject.Controllers
 {
     public class EventsController : Controller
     {
-        private UnitOfWork unit = new UnitOfWork(ApplicationContext.Context);
+        private readonly IUnitOfWork unit = new UnitOfWork();
+
+        public EventsController(IUnitOfWork @object) => unit = @object;
 
         public ViewResult Index([FromQuery] int? page)
         {
             if (!page.HasValue)
                 page = 1;
 
-            int pageCount = (int)Math.Ceiling((double)unit.Clubs.getCount() / 6);
+            int pageCount = (int)Math.Ceiling((double)unit.Events.getCount() / 6);
 
             List<Event> events = unit.Events.FindRange((page.Value - 1) * 6, 6).ToList();
             ViewBag.page = page;
             ViewBag.pageCount = pageCount;
-            return View(events);
+            return View("Index", events);
 
         }
 
@@ -43,18 +45,16 @@ namespace FrameworksProject.Controllers
             ViewBag.error = TempData["error"];
             ViewBag.category = new MultiSelectList(cat, selectedCat);
             ViewBag.club = new MultiSelectList(club, selectedClub);
-            return View();
+            return View("Search");
         }
 
         [HttpPost]
         public IActionResult Search(string name, string category, string club, string createdFrom, string createdTo)
         {
-            DateTime from;
             DateTime.TryParseExact(createdFrom, "dd-MM-yyyy", CultureInfo.InvariantCulture,
-                           DateTimeStyles.None, out from);
-            DateTime to;
+                           DateTimeStyles.None, out DateTime from);
             DateTime.TryParseExact(createdTo, "dd-MM-yyyy", CultureInfo.InvariantCulture,
-                           DateTimeStyles.None, out to);
+                           DateTimeStyles.None, out DateTime to);
 
             if (from.Year==0001 && createdFrom != null)
             {
@@ -66,9 +66,9 @@ namespace FrameworksProject.Controllers
                 TempData["error"] = "Invalid Year";
                 return RedirectToAction("Search");
             }
-            ViewBag.name = name!=null ? name: "";
-            ViewBag.category = category != null ? category : "";
-            ViewBag.club = club != null ? club : "";
+            ViewBag.name = name ?? "";
+            ViewBag.category = category ?? "";
+            ViewBag.club = club ?? "";
             ViewBag.from = createdFrom; ViewBag.to = createdTo;
             ViewBag.page = 0; ViewBag.pageCount = 0;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FrameworksProject.Data.Infrastructure
 {
-    interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         IClubRepository Clubs { get; }
         IEventRepository Events { get; }

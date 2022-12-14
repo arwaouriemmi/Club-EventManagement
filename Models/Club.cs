@@ -46,7 +46,7 @@ namespace FrameworksProject.Models
 
             for (var i= 0; i < events.Count(); i++)
             {
-                ev += events[i].name + " ";
+                ev += events[i].Name + " ";
             }
 
             for (var i = 0; i < members.Count(); i++)
