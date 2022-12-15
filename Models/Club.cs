@@ -11,50 +11,51 @@ namespace FrameworksProject.Models
     public class Club
     {
         [Key]
-        public int id { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public string website { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Website { get; set; }
 
         [Range(1992, 2022)]
-        public int creationYear { get; set; }
-        public string logo { get; set; }
-        public List<Event> events { get; set; }
-        public List<Member> members { get; set; }
+        public int CreationYear { get; set; }
+        public string Logo { get; set; }
+        public List<Event> Events { get; set; }
+        public List<Member> Members { get; set; }
 
         public Club()
         {
-            this.members = new List<Member>();
-            this.events = new List<Event>();
+            this.Members = new List<Member>();
+            this.Events = new List<Event>();
         }
 
         public Club(string name, string description, string website, int creationYear, string logo)
         {
-            this.name = name;
-            this.description = description;
-            this.website = website;
-            this.creationYear = creationYear;
-            this.logo = logo;
-            this.members = new List<Member>();
-            this.events = new List<Event>();
+            this.Name = name;
+            this.Description = description;
+            this.Website = website;
+            this.CreationYear = creationYear;
+            this.Logo = logo;
+            this.Members = new List<Member>();
+            this.Events = new List<Event>();
         }
+
 
         public override string ToString()
         {
             string ev = "";
             string mem = "";
 
-            for (var i= 0; i < events.Count(); i++)
+            for (var i= 0; i < Events.Count(); i++)
             {
-                ev += events[i].Name + " ";
+                ev += Events[i].Name + " ";
             }
 
-            for (var i = 0; i < members.Count(); i++)
+            for (var i = 0; i < Members.Count(); i++)
             {
-                mem += members[i].name + " ";
+                mem += Members[i].name + " ";
             }
 
-            return "id: " + id.ToString() + " name: " + name + " description: " + description + " website: " + website +  " event : {" + ev + "}"
+            return "id: " + Id.ToString() + " name: " + Name + " description: " + Description + " website: " + Website +  " event : {" + ev + "}"
                 + " members: {" + mem +"}";
         }
     }

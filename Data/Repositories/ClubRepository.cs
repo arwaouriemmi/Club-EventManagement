@@ -18,7 +18,7 @@ namespace FrameworksProject.Data.Repositories
 
         public IQueryable<Club> findCompleteClubs()
         {
-            return _context.Club.Include(c => c.events).Include(c => c.members);
+            return _context.Club.Include(c => c.Events).Include(c => c.Members);
         }
 
         public IQueryable<Club> SearchByNameOrDate(string name, int from, int to)
@@ -26,7 +26,7 @@ namespace FrameworksProject.Data.Repositories
 
             if (to == 0) to = 3000;
             
-            return _context.Club.Where(c=> c.name == name || (c.creationYear>=from && c.creationYear <=to));
+            return _context.Club.Where(c=> c.Name == name || (c.CreationYear>=from && c.CreationYear <=to));
 
 
         }

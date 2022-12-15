@@ -6,6 +6,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 namespace FrameworksProject.Test
@@ -51,27 +52,42 @@ namespace FrameworksProject.Test
             Assert.AreEqual("Search", result.ViewName);
         }
 
-        [Test]
-        public void Test_Search_Result([Values("11-12-2020")] string from, string to, string name)
+        [TestCase("11-12-2020", "23-06-2023", "Test One")]
+        public void Test_Search_Result(string from, string to, string name)
         {
-            mockUnit.Setup(unit => unit.Events.Search(name, "All", "All", new DateTime(2020, 12,11), new DateTime(0001, 10,10))).Returns(Events().AsQueryable());
+            DateTime date1 = DateTime.ParseExact(from, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            DateTime date2 = DateTime.ParseExact(to, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            mockUnit.Setup(unit => unit.Events.Search(name, "All", "All", date1, date2)).Returns(Events().GetRange(0,1).AsQueryable());
 
             var controller = new EventsController(mockUnit.Object);
 
             var result = controller.Search(name, "All", "All", from, to) as ViewResult;
             Assert.AreEqual("Index", result.ViewName);
-            Assert.AreEqual(Events(), result.Model.ToString());
+            Assert.AreEqual(Events().GetRange(0, 1).ToString(), result.Model.ToString());
         }
 
-        [Test]
-        public void Test_Search_Invalid([Values("22/06/120")] string from, string to, string name)
+        [TestCase(1)]
+        [TestCase(10)]
+        public void Test_Delete(int id)
         {
+            Event c = id < 4 ? Events().ElementAt(id - 1) : null;
+            mockUnit.Setup(unit => unit.Events.Find(id)).Returns(c);
+            mockUnit.Setup(unit => unit.Complete()).Returns(true);
+
+            if (id < 4)
+            {
+                mockUnit.Setup(unit => unit.Events.Delete(c)).Verifiable();
+            }
+            else
+            {
+                mockUnit.Setup(unit => unit.Events.Delete(c)).Throws<Exception>();
+            }
+
             var controller = new EventsController(mockUnit.Object);
+            var result = controller.Delete(id);
 
-            var result = controller.Search(name, "All", "All", from, to) as RedirectToActionResult;
+            Assert.AreEqual("Index", result.ActionName);
 
-            Assert.AreEqual("Search", result.ActionName);
-            Assert.AreEqual("Events", result.ControllerName);
         }
 
     }

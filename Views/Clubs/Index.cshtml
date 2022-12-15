@@ -20,11 +20,11 @@
     @foreach (var c in Model)
     {
         <div class="card mb-5" style="width: 18rem;">
-            <img class="card-img-top" style="height: 20rem; width:100%;" src=@(c.logo!=""? c.logo: alt_image) alt="club logo">
+            <img class="card-img-top" style="height: 20rem; width:100%;" src=@(c.Logo!=""? c.Logo: alt_image) alt="club logo">
             <div class="card-body h-auto" style="height: 20rem;">
-                <h5 class="card-title">@c.name</h5>
-                <p class="card-text">Since @c.creationYear</p>
-                <a href="/clubs/@c.id" class="btn btn-danger">See Details</a>
+                <h5 class="card-title">@c.Name</h5>
+                <p class="card-text">Since @c.CreationYear</p>
+                <a href="/clubs/@c.Id" class="btn btn-danger">See Details</a>
             </div>
         </div>
     }

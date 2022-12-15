@@ -6,6 +6,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -49,26 +50,47 @@ namespace FrameworksProject.Test
             Assert.AreEqual("Search", result.ViewName);
         }
 
-        [Test]
-        public void Test_Search_Result([Values("Test Two", "2015", "2020")] string name, string from, string to)
+        [TestCase("Test One", "2005", "2023")]
+        public void Test_Search_Result(string name, string from, string to)
         {
-            mockUnit.Setup(unit => unit.Clubs.SearchByNameOrDate(name, 2015, 2020)).Returns(Clubs().GetRange(1,1).AsQueryable());
+            int year1 = 0 ;
+            int.TryParse(from, out year1);
+            int year2 = 0;
+            int.TryParse(to, out year2);
+
+            if (year1 != 0 && year2 != 0)
+                mockUnit.Setup(unit => unit.Clubs.SearchByNameOrDate(name, year1, year2)).Returns(Clubs().GetRange(1, 1).AsQueryable());
 
             var controller = new ClubsController(mockUnit.Object);
 
             var result = controller.Search(name, from, to);
-            Assert.AreEqual("Index", result.ViewName);
-            Assert.AreEqual(Clubs().GetRange(1, 1).ToString(), result.Model.ToString());
+
+             Assert.AreEqual("Index", result.ViewName);
+             Assert.AreEqual(Clubs().GetRange(1, 1).ToString(), result.Model.ToString());
         }
 
-        [Test]
-        public void Test_Search_Invalid([Values("Test Two", "5", "2020")] string name, string from, string to)
+        [TestCase(1)]
+        [TestCase(10)]
+        public void Test_Delete(int id)
         {
-            var controller = new ClubsController(mockUnit.Object);
+            Club c = id<4? Clubs().ElementAt(id-1) : null;
+            mockUnit.Setup(unit => unit.Clubs.Find(id)).Returns(c);
+            mockUnit.Setup(unit => unit.Complete()).Returns(true);
 
-            var result = controller.Search(name, from, to);
-            Assert.AreEqual("Search", result.ViewName);
-            Assert.AreEqual("Invalid Year", result.ViewData["error"]);
+            if (id < 4)
+            {
+                mockUnit.Setup(unit => unit.Clubs.Delete(c)).Verifiable();
+            }
+            else
+            {
+                mockUnit.Setup(unit => unit.Clubs.Delete(c)).Throws<Exception>();
+            }
+
+            var controller = new ClubsController(mockUnit.Object);
+            var result = controller.Delete(id);
+
+            Assert.AreEqual("Index", result.ActionName);
+
         }
     }
 }

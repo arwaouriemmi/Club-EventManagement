@@ -9,6 +9,7 @@ namespace FrameworksProject.Data.Infrastructure
     public interface IRepository<T> where T:class
     {
         IQueryable<T> FindAll();
+        public T Find(int id);
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
         IQueryable<T> FindRange(int beg, int number);
 

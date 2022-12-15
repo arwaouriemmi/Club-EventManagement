@@ -22,7 +22,7 @@ namespace FrameworksProject.Data.Repositories
 
         public List<string> FindAllClubs()
         {
-            return _context.Event.Include( e=> e.Club).Select(e => e.Club.name).Distinct().ToList();
+            return _context.Event.Include( e=> e.Club).Select(e => e.Club.Name).Distinct().ToList();
         }
 
         public IQueryable<Event> Search(string name, string category, string club, DateTime from, DateTime to) 
@@ -41,7 +41,7 @@ namespace FrameworksProject.Data.Repositories
                 query = query.Where(e => e.Name.ToLower() == name.ToLower());
 
             if (club != "All")
-                query = query.Where(e => e.Club.name == club);
+                query = query.Where(e => e.Club.Name == club);
 
             if (from.Year!=0001)
                 query = query.Where(e => DateTime.Compare(e.Date, from)>=0);

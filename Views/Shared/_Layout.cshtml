@@ -9,10 +9,13 @@
 </head>
 <body>
     
-    <div class="@(ViewBag.error!=null ? "alert alert-danger": "h-0 overflow-hidden")" role="alert">
-        @ViewBag.error
+    <div class="@(TempData["error"]!=null ? "alert alert-danger": "h-0 overflow-hidden")" role="alert">
+        @TempData["error"]
     </div>
-    
+    <div class="@(TempData["success"]!=null ? "alert alert-success": "h-0 overflow-hidden")" role="alert">
+        @TempData["success"]
+    </div>
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">

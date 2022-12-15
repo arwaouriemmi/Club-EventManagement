@@ -17,6 +17,13 @@ namespace FrameworksProject.Data.Infrastructure
             return _context.Set<T>();
         }
 
+        public T Find(int id)
+        {
+            T t= _context.Set<T>().Find(id);
+            return t;
+            
+        }
+
         public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
         {
             return _context.Set<T>().Where(expression);

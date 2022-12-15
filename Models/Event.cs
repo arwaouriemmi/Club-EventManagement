@@ -39,7 +39,7 @@ namespace FrameworksProject.Models
 
         public override string ToString()
         {
-            return "id: "+Id.ToString() + " name: "+Name + " category: "+ Category+ " date: " + Date.ToString() + " description: "+ Description + " club : {"+ Club.name +"}" ;
+            return "id: "+Id.ToString() + " name: "+Name + " category: "+ Category+ " date: " + Date.ToString() + " description: "+ Description + " club : {"+ Club.Name +"}" ;
         }
     }
 }

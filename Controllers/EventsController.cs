@@ -42,7 +42,6 @@ namespace FrameworksProject.Controllers
             List<string> selectedCat = new List<string> { cat[0] };
             List<string> selectedClub = new List<string> { club[0] };
 
-            ViewBag.error = TempData["error"];
             ViewBag.category = new MultiSelectList(cat, selectedCat);
             ViewBag.club = new MultiSelectList(club, selectedClub);
             return View("Search");
@@ -56,12 +55,7 @@ namespace FrameworksProject.Controllers
             DateTime.TryParseExact(createdTo, "dd-MM-yyyy", CultureInfo.InvariantCulture,
                            DateTimeStyles.None, out DateTime to);
 
-            if (from.Year==0001 && createdFrom != null)
-            {
-                TempData["error"] = "Invalid Year";
-                return RedirectToAction("Search");
-            }
-            if (to.Year == 0001 && createdTo != null)
+            if ((from.Year==0001 && createdFrom != null) || (to.Year == 0001 && createdTo != null))
             {
                 TempData["error"] = "Invalid Year";
                 return RedirectToAction("Search");
@@ -74,6 +68,21 @@ namespace FrameworksProject.Controllers
 
             List<Event> events = unit.Events.Search(name, category, club, from, to).ToList();
             return View("Index", events);
+        }
+
+        public RedirectToActionResult Delete(int id)
+        {
+            try 
+            {
+                Event e = unit.Events.Find(id);
+                unit.Events.Delete(e);
+                unit.Complete();
+                
+                TempData["success"] = "Event has been deleted";
+            } catch (Exception e)
+            {
+            }
+            return RedirectToAction("Index");
         }
 
     }

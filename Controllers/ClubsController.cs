@@ -50,18 +50,11 @@ namespace FrameworksProject.Controllers
             if (createdTo == "") to = 0;
             else int.TryParse(createdTo, out to);
 
-
-            if ( from!=0 && (from < 1900 || from > 2022))
+            if ( (from!=0 && (from < 1900 || from > 2022)) || (to != 0 && to < 1900))
             {
-                ViewBag.error = "Invalid Year";
+                TempData["error"] = "Invalid Year";
                 return View("Search");
             }
-            if ( to !=0 && to < 1900)
-            {
-                ViewBag.error = "Invalid Year";
-                return View("Search");
-            }
-
             ViewBag.name = name ?? "";
             ViewBag.from = createdFrom;
             ViewBag.to = createdTo;
@@ -70,6 +63,22 @@ namespace FrameworksProject.Controllers
             ViewBag.pageCount = 0;
             ViewBag.page = 0;
             return View("Index", clubs);
+        }
+
+        public RedirectToActionResult Delete(int id)
+        {
+            try
+            {
+                Club e = unit.Clubs.Find(id);
+                unit.Clubs.Delete(e);
+                unit.Complete();
+
+                TempData["success"] = "Club has been deleted";
+            }
+            catch (Exception e)
+            {
+            }
+            return RedirectToAction("Index");
         }
     }
 }
