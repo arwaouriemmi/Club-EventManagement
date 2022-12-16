@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -91,6 +92,41 @@ namespace FrameworksProject.Test
 
             Assert.AreEqual("Index", result.ActionName);
 
+        }
+        [TestCase(1)]
+        public void Test_SelectClub(int id)
+        {
+            var controller = new ClubsController(mockUnit.Object);
+            var result = controller.Club(id);
+            Assert.AreEqual("SelectClub", result.ViewName);
+
+        }
+        [TestCase("junior", "waw", "junior.com", "2020","")]
+        public void Test_ClubCreation(string name, string description, string website, int creationYear, string logo)
+        { 
+            var controller = new ClubsController(mockUnit.Object);
+
+            var result = controller.CreateClub(name,description,website,creationYear,logo) as ActionResult;
+            Assert.AreEqual("Index", result);
+            //Assert.AreEqual("Club has been created", result.TempData["success"]);
+        }
+        [TestCase(100000, "junior", "", "", "2022","","","")]
+        public void Test_ClubUpdate1(int id, string name, string description, string website, int creationYear, string logo,string president,string hr)
+        { 
+            var controller = new ClubsController(mockUnit.Object);
+
+            var result = controller.UpdateClub(id, name,description,website,creationYear,logo,"","") as ViewResult;
+            Assert.AreEqual("UpdateClub", result.ViewName);
+          
+
+        }
+        [TestCase(1, "junior", "", "", "2022", "","","")]
+        public void Test_ClubUpdate2(int id, string name, string description, string website, int creationYear, string logo,string president,string hr)
+        {
+            var controller = new ClubsController(mockUnit.Object);
+            var result = controller.UpdateClub(id, name, description, website, creationYear, logo,president,hr) as ViewResult;
+            Assert.AreEqual("Index", result.ViewName);
+            Assert.AreEqual("Club has been updated", result.TempData["success"]);
         }
     }
 }

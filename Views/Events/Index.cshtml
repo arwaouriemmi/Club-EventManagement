@@ -23,7 +23,7 @@
             <div class="card-body h-auto" style="height: 20rem;">
                 <h5 class="card-title">@c.Name</h5>
                 <p class="card-text">Happening the @(c.Date.ToString("dd-MM-yyyy") + (c.Date.ToString("HH:mm")!="00:00" ? " starts at "+ c.Date.ToString("HH:mm") : ""))</p>
-                <a href="/clubs/@c.Id" class="btn btn-danger">See Details</a>
+                <a href="/Events/SelectEvent?id=@c.Id" class="btn btn-danger">See Details</a>
             </div>
         </div>
     }

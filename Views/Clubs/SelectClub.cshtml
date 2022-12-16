@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "SelectClub";
+    string alt_image = "https://i1.wp.com/insatpress.tn/wp-content/uploads/2020/04/44104159_2181495298587811_5543566004648411136_o.jpg?resize=1000%2C600&ssl=1";
+
+}
+@model Club
+<h1 class="display-4 mt-lg-5">
+    Club
+</h1>
+@if (Model == null)
+{
+    <h3 class="lead">
+        Il n'existe pas un club avec l'Id proposé
+    </h3>
+}
+else
+{
+    <div class="d-flex justify-content-around flex-wrap">
+        
+            <div class="card mb-5" style="width: 18rem;">
+                <img class="card-img-top" style="height: 20rem; width:100%;" src=(Model.Logo!=""? Model.Logo: alt_image) alt="club logo">
+                <div class="card-body h-auto" style="height: 20rem;">
+                    <h5 class="card-title">Model.Name</h5>
+                    <p class="card-text">Since Model.CreationYear</p>
+                    <a href="/clubs/Model.Id" class="btn btn-danger">See Details</a>
+                </div>
+            </div>
+        
+    </div>
+}

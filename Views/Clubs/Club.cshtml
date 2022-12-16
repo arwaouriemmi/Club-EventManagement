@@ -9,16 +9,14 @@
 <div class="row">
     <div class="col-6">
         <h1 class="monospace">
-            {{ venue.name }}
+             @Model.Name
         </h1>
         <p class="subtitle">
-            ID: {{ venue.id }}
+            ID: @Model.Id
         </p>
-        <div class="btn btn-light d-block col-3">
-            <span>{{ genre }}</span>
-        </div>
+   
         <h3 class="my-2">
-            <a asp-area="" asp-controller="clubs" asp-action="edit" asp-route-id="@Model.Id">
+            <a asp-area="" asp-controller="Clubs" asp-action="UpdateClub" asp-route-id="@Model.Id">
                 <button type="button" class="btn btn-danger btn-lg">Edit</button>
             </a>
             <a asp-area="" asp-controller="clubs" asp-action="delete" asp-route-id="@Model.Id">
@@ -27,7 +25,7 @@
         </h3>
     </div>
     <div class="col-6">
-        <img src="{{ venue.image_link }}" alt="Venue Image" />
+        <img src="@Model.Logo" alt="Venue Image" />
     </div>
 </div>
 
@@ -36,20 +34,17 @@
 </h3>
 <div class="row">
     <div class="d-flex justify-content-around flex-wrap">
-
-        <div class="card mb-5" style="width: 18rem;">
-            <div class="card-body h-auto" style="height: 20rem;">
-                <h5 class="card-title">c.name</h5>
-                <p class="card-text">Role </p>
+              @{
+                  foreach(Member m in Model.Members){
+            <div class="card mb-5" style="width: 18rem;">
+                <div class="card-body h-auto" style="height: 20rem;">
+                    <h5 class="card-title">@m.name</h5>
+                    <p class="card-text">@m.role </p>
+                </div>
             </div>
-        </div>
-
-        <div class="card mb-5" style="width: 18rem;">
-            <div class="card-body h-auto" style="height: 20rem;">
-                <h5 class="card-title">c.name</h5>
-                <p class="card-text"> Role </p>
-            </div>
-        </div>
+              }
+              }
+ 
 
     </div>
 </div>
@@ -57,26 +52,20 @@
 <h3 class="display-4">
                 Events
 </h3>
+
 <div class="row">
     <div class="d-flex justify-content-around flex-wrap">
-
-        <div class="card mb-5" style="width: 18rem;">
-            <img class="card-img-top" style="height: 20rem; width:100%;" src=@(alt_image) alt="event image">
-            <div class="card-body h-auto" style="height: 20rem;">
-                <h5 class="card-title">c.name</h5>
-                <p class="card-text">Happening the (c.date.ToString("dd-MM-yyyy") + (c.date.ToString("HH:mm")!="00:00" ? " starts at "+ c.date.ToString("HH:mm") : ""))</p>
-                <a href="/clubs/c.id" class="btn btn-danger">See Details</a>
-            </div>
-        </div>
-
-        <div class="card mb-5" style="width: 18rem;">
-            <img class="card-img-top" style="height: 20rem; width:100%;" src=@(alt_image) alt="event image">
-            <div class="card-body h-auto" style="height: 20rem;">
-                <h5 class="card-title">c.name</h5>
-                <p class="card-text">Happening the (c.date.ToString("dd-MM-yyyy") + (c.date.ToString("HH:mm")!="00:00" ? " starts at "+ c.date.ToString("HH:mm") : ""))</p>
-                <a href="/clubs/c.id" class="btn btn-danger">See Details</a>
-            </div>
-        </div>
-
+        @{
+            foreach(Event e in Model.Events){
+                    <div class="card mb-5" style="width: 18rem;">
+                        <img class="card-img-top" style="height: 20rem; width:100%;" src=@(alt_image) alt="event image">
+                        <div class="card-body h-auto" style="height: 20rem;">
+                            <h5 class="card-title">@e.Name</h5>
+                            <p class="card-text">Happening the (@e.Date.ToString("dd-MM-yyyy") + (@e.Date.ToString("HH:mm")!="00:00" ? " starts at "+ @e.Date.ToString("HH:mm") : ""))</p>
+                            <a href="/Events/SelectEvent?id=@e.Id" class="btn btn-danger">See Details</a>
+                        </div>
+                    </div>
+        }
+        }
     </div>
 </div>

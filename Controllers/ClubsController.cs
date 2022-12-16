@@ -1,9 +1,11 @@
 ﻿using FrameworksProject.Data.Infrastructure;
 using FrameworksProject.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 
 namespace FrameworksProject.Controllers
@@ -27,11 +29,68 @@ namespace FrameworksProject.Controllers
             return View("Index", clubs);
 
         }
-        [Route("clubs/{id}")]
+        
         public ViewResult Club(int id)
         {
-            return View("Club");
+            Club e = unit.Clubs.Find(id); 
+            return View(e);
         }
+        [HttpGet]
+        public ViewResult CreateClub()
+        {
+            return View();
+        }
+        [HttpPost]
+        public RedirectToActionResult CreateClub(string name, string description, string website, int creationYear, string logo)
+        {
+            
+            Club e = new Club(name,description,website,creationYear,logo);
+            try
+            {
+                unit.Clubs.Create(e);
+                unit.Complete();
+                TempData["success"] = "Club has been created";
+            }
+            catch (Exception j) { TempData["error"] = j.Message; }
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ViewResult UpdateClub(int id )
+        {
+            
+            return View();
+        }
+        [HttpPost]
+        public IActionResult UpdateClub(int id, string name, string description, string website, int creationYear, string logo,string president,string hr)
+        {
+
+      
+            Club e = unit.Clubs.Find(id);
+            if (e == null) return RedirectToAction("UpdateClub");
+            else
+            {
+                e.Name = name;
+                e.Description = description;
+                e.Website = website;
+                e.CreationYear = creationYear;
+                e.Logo = logo;
+                Member m1 = new Member(president, "president", e);
+                Member m2 = new Member(hr, "HR", e);
+                e.Members.Add(m1);
+                e.Members.Add(m2);  
+                try
+                {
+                    unit.Clubs.Update(e);
+                    unit.Complete();
+                    TempData["success"] = "Club has been updated";
+                }
+                catch (Exception j) { TempData["error"] = j.Message; }
+                return RedirectToAction("Index");
+            }
+
+        }
+        
+       
         
 
         [HttpGet]
