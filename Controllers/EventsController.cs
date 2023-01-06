@@ -23,7 +23,7 @@ namespace FrameworksProject.Controllers
             if (!page.HasValue)
                 page = 1;
 
-            int pageCount = (int)Math.Ceiling((double)unit.Events.getCount() / 6);
+            int pageCount = (int)Math.Ceiling((double)unit.Events.GetCount() / 6);
 
             List<Event> events = unit.Events.FindRange((page.Value - 1) * 6, 6).ToList();
             ViewBag.page = page;
@@ -31,18 +31,17 @@ namespace FrameworksProject.Controllers
             return View("Index", events);
 
         }
-        public ViewResult SelectEvent(int id)
+        public ViewResult Event(int id)
         {
                 Event e = unit.Events.Find(id);
-                return View("SelectEvent",e);
+                return View(e);
         }
         [HttpGet]
-        public ViewResult CreateEvent()
+        public ViewResult Create()
         {
             List<string> cat = unit.Events.FindAllCategories();
             cat.Insert(0, "All");
             List<string> club = unit.Events.FindAllClubs();
-            club.Insert(0, "All");
             List<string> selectedCat = new List<string> { cat[0] };
             List<string> selectedClub = new List<string> { club[0] };
             ViewBag.category = new MultiSelectList(cat, selectedCat);
@@ -50,7 +49,7 @@ namespace FrameworksProject.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateEvent(string name, string category, string club, string date, string description, string staffForm, string participationForm,string  image)
+        public IActionResult Create(string name, string category, string club, string date, string description, string staffForm, string participationForm,string  image)
         {
 
             DateTime.TryParseExact(date, "dd-MM-yyyy", CultureInfo.InvariantCulture,
@@ -72,52 +71,43 @@ namespace FrameworksProject.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public ViewResult UpdateEvent(int id)
+        public ActionResult Update(int id)
         {
+            Event e = unit.Events.FindEventWithDetails(id);
+            if (e == null) return RedirectToAction("Create");
             List<string> cat = unit.Events.FindAllCategories();
             cat.Insert(0, "All");
             List<string> club = unit.Events.FindAllClubs();
             club.Insert(0, "All");
-            List<string> selectedCat = new List<string> { cat[0] };
-            List<string> selectedClub = new List<string> { club[0] };
+            List<string> selectedCat = new List<string> { e.Category };
+            List<string> selectedClub = new List<string> { e.Club.Name };
             ViewBag.category = new MultiSelectList(cat, selectedCat);
             ViewBag.club = new MultiSelectList(club, selectedClub);
-            return View();
+            return View(e);
         }
         [HttpPost]
-        public IActionResult UpdateEvent(int id , string name, string category, string club, string date, string description, string staffForm, string participationForm, string image)
+        public IActionResult Update(Event e, string club, string category)
         {
+            e.Category = category;
+            e.Club = unit.Clubs.FindByCondition(c => c.Name == club).FirstOrDefault();
 
-            DateTime.TryParseExact(date, "dd-MM-yyyy", CultureInfo.InvariantCulture,
-                            DateTimeStyles.None, out DateTime d);
-            List<Club> clubs = unit.Clubs.SearchByNameOrDate(club, 0, 0).ToList();
-            if (d.Year == 0001 && date != null)
-            {
-                TempData["error"] = "Invalid Year";
-                return RedirectToAction("UpdateEvent");
-            }
-            Event e = unit.Events.Find(id);
-            if (e == null) return RedirectToAction("UpdateEvent");
+            Event c = unit.Events.Find(e.Id);
+            if (c == null) return RedirectToAction("Update");
             else
             {
-                e.Date = d;
-                e.Description = description;
-                e.StaffForm = staffForm;
-                e.ParticipationForm = participationForm;
-                e.Club = clubs[0];
-                e.Name = name;
-                e.Category = category;
                 try
                 {
-                    unit.Events.Update(e);
+                    unit.Events.Update(c, e);
                     unit.Complete();
                     TempData["success"] = "Event has been updated";
                 }
                 catch (Exception j) { TempData["error"] = j.Message; }
                 return RedirectToAction("Index");
             }
-            
+
         }
+
+
         [HttpGet]
         public ViewResult Search()
         {
@@ -168,6 +158,7 @@ namespace FrameworksProject.Controllers
                 TempData["success"] = "Event has been deleted";
             } catch (Exception e)
             {
+                TempData["error"] = e.Message;
             }
             return RedirectToAction("Index");
         }

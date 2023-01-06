@@ -21,7 +21,7 @@ namespace FrameworksProject.Controllers
             if (!page.HasValue)
                 page = 1;
 
-            int pageCount = (int)Math.Ceiling((double)unit.Clubs.getCount() / 6);
+            int pageCount = (int)Math.Ceiling((double)unit.Clubs.GetCount() / 6);
 
             List<Club> clubs = unit.Clubs.FindRange((page.Value - 1) * 6, 6).ToList();
             ViewBag.page = page;
@@ -35,52 +35,61 @@ namespace FrameworksProject.Controllers
             Club e = unit.Clubs.Find(id); 
             return View(e);
         }
-        [HttpGet]
-        public ViewResult CreateClub()
-        {
-            return View();
-        }
-        [HttpPost]
-        public RedirectToActionResult CreateClub(string name, string description, string website, int creationYear, string logo)
-        {
-            
-            Club e = new Club(name,description,website,creationYear,logo);
-            try
-            {
-                unit.Clubs.Create(e);
-                unit.Complete();
-                TempData["success"] = "Club has been created";
-            }
-            catch (Exception j) { TempData["error"] = j.Message; }
-            return RedirectToAction("Index");
-        }
-        [HttpGet]
-        public ViewResult UpdateClub(int id )
-        {
-            
-            return View();
-        }
-        [HttpPost]
-        public IActionResult UpdateClub(int id, string name, string description, string website, int creationYear, string logo,string president,string hr)
-        {
 
-      
-            Club e = unit.Clubs.Find(id);
-            if (e == null) return RedirectToAction("UpdateClub");
+        [HttpGet]
+        public ViewResult Create()
+        {
+            Club c = new Club();
+            return View(c);
+        }
+        [HttpPost]
+        public RedirectToActionResult Create(Club club, ICollection<string> ids, ICollection<string> roles, ICollection<string> names)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["error"] = "Incorrect Fields";
+                return RedirectToAction("Create");
+            }
+            if (club == null) return RedirectToAction("Create");
             else
             {
-                e.Name = name;
-                e.Description = description;
-                e.Website = website;
-                e.CreationYear = creationYear;
-                e.Logo = logo;
-                Member m1 = new Member(president, "president", e);
-                Member m2 = new Member(hr, "HR", e);
-                e.Members.Add(m1);
-                e.Members.Add(m2);  
+                Debug.WriteLine(club.Members.Count());
                 try
                 {
-                    unit.Clubs.Update(e);
+                    club.Members = unit.Clubs.AddMembers(club, roles, names);
+                    unit.Clubs.Create(club);
+                    unit.Complete();
+                    TempData["success"] = "Club has been created successfulle";
+                }
+                catch (Exception) { TempData["error"] = "An error has occured"; }
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpGet]
+        public ActionResult Update(int id )
+        {
+
+            Club c = unit.Clubs.GetClubWithMembers(id);
+            if (c == null) return RedirectToAction("Create");
+            return View(c);
+        }
+
+        [HttpPost]
+        public IActionResult Update(Club club, ICollection<string> ids, ICollection<string> roles, ICollection<string> names )
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["error"] = "Incorrect Fields";
+                return RedirectToAction("Update");
+            }
+            Club c = unit.Clubs.GetClubWithMembers(club.Id);
+            if (club == null) return RedirectToAction("Update");
+            else
+            {
+                try
+                {
+                    c = unit.Clubs.UpdateMembers(c, ids, roles, names);
+                    unit.Clubs.Update(c, club);
                     unit.Complete();
                     TempData["success"] = "Club has been updated";
                 }
@@ -89,9 +98,6 @@ namespace FrameworksProject.Controllers
             }
 
         }
-        
-       
-        
 
         [HttpGet]
         public ViewResult Search()
@@ -131,11 +137,13 @@ namespace FrameworksProject.Controllers
                 Club e = unit.Clubs.Find(id);
                 unit.Clubs.Delete(e);
                 unit.Complete();
+                Debug.WriteLine(e.ToString());
 
                 TempData["success"] = "Club has been deleted";
             }
-            catch (Exception e)
+            catch (Exception)
             {
+                TempData["error"] = "An error has occured. Try again.";
             }
             return RedirectToAction("Index");
         }

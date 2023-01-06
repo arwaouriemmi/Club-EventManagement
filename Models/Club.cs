@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 namespace FrameworksProject.Models
 {
     [Table("Club")]
-    public class Club
+    public class Club : IValidatableObject
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Url]
         public string Website { get; set; }
 
         [Range(1992, 2022)]
@@ -52,11 +55,16 @@ namespace FrameworksProject.Models
 
             for (var i = 0; i < Members.Count(); i++)
             {
-                mem += Members[i].name + " ";
+                mem += Members[i].Name + " ";
             }
 
             return "id: " + Id.ToString() + " name: " + Name + " description: " + Description + " website: " + Website +  " event : {" + ev + "}"
                 + " members: {" + mem +"}";
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            throw new NotImplementedException();
         }
     }
 }

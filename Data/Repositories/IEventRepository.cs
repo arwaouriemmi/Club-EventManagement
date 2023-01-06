@@ -11,6 +11,7 @@ namespace FrameworksProject.Data.Repositories
     {
         List<string> FindAllClubs();
         List<string> FindAllCategories();
+        Event FindEventWithDetails(int id);
 
         IQueryable<Event> Search(string name, string category, string club, DateTime from, DateTime to);
     }

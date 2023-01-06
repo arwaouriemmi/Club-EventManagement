@@ -13,9 +13,9 @@ namespace FrameworksProject.Data.Infrastructure
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
         IQueryable<T> FindRange(int beg, int number);
 
-        int getCount();
+        int GetCount();
         void Create(T entity);
-        void Update(T entity);
+        void Update(T existingEntity, T entity);
         void Delete(T entity);
     }
 }

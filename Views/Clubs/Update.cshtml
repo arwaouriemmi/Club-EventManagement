@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Update Club";
+}
+@model Club
+
+<h2 class="display-4">Update an Event!!</h2>
+<div class="row">
+    <div class="col-12 justify-content-center">
+        <section id="CreateForm">
+            @using (Html.BeginForm("Update", "Clubs", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <hr />
+                <div class="form-group">
+                    @Html.Label("name", "Enter the Club name: ", new { @class = "control-label lead" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control form-control-lg" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("name", "Enter the club description: ", new { @class = "control-label lead" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control form-control-lg" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("name", "Enter the club creation year: ", new { @class = "control-label lead" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.CreationYear, new { @class = "form-control form-control-lg", @type = "number" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("name", "Enter the club website: ", new { @class = "control-label lead" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Website, new { @class = "form-control form-control-lg" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("name", "Enter the club logo: ", new { @class = "control-label lead" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Logo, new { @class = "form-control form-control-lg" })
+                    </div>
+                </div>
+                @Html.Label("name", "Members: ", new { @class = "control-label lead" })
+
+        <div id="members">
+            @foreach (var m in Model.Members)
+            {
+                <div class="row">
+                    @Html.TextBox("ids", m.Id, new { @class = "form-control d-none" })
+                    @Html.Label("name", "Role:", new { @class = "control-label lead" })
+                    <div class="col-md-4">
+                        @Html.TextBox("roles", m.Role, new { @class = "form-control form-control-lg" })
+                    </div>
+                    @Html.Label("name", "Name:", new { @class = "control-label lead" })
+                    <div class="col-md-4">
+                        @Html.TextBox("names", m.Name, new { @class = "form-control form-control-lg" })
+                    </div>
+                    <div class="mb-2">
+                        <button class="col-md-1 btn btn-link " id="removeRow" type="button"> &#9587 </button>
+                    </div>
+                </div>
+            }
+        </div>
+                <button class="btn btn-danger" id="addRow" type="button"> Add Member </button>
+                <div class="form-group mt-2">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Update" class="btn btn-danger btn-lg" />
+                    </div>
+                </div>
+            }
+        </section>
+        </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $("#addRow").click(function () {
+        var html = `<div class="row">
+                        <input name="ids" class="d-none" value="-1"/>
+                        <label class="control-label lead">Role:</label>
+                        <div class="col-md-4">
+                            <input name="roles" class="form-control form-control-lg" required/>
+                        </div>
+                        <label class="control-label lead">Name:</label>
+                        <div class="col-md-4">
+                            <input name="names" class="form-control form-control-lg" required/>
+                        </div>
+                        <div class="mb-2">
+                        <button class="col-md-1 btn btn-link" id="removeRow" type="button"> &#9587 </button>
+                        </div>
+                    </div>`
+        $('#members').append(html);
+    });
+
+        jQuery('body').on('click', '#removeRow', function () {
+                console.log($(this));
+                $(this).parent().parent().remove();
+            })
+    </script>
+}

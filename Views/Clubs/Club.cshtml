@@ -16,10 +16,10 @@
         </p>
    
         <h3 class="my-2">
-            <a asp-area="" asp-controller="Clubs" asp-action="UpdateClub" asp-route-id="@Model.Id">
+            <a asp-area="" asp-controller="Clubs" asp-action="update" asp-route-id="@Model.Id">
                 <button type="button" class="btn btn-danger btn-lg">Edit</button>
             </a>
-            <a asp-area="" asp-controller="clubs" asp-action="delete" asp-route-id="@Model.Id">
+            <a href="/Clubs/delete/@Model.Id">
                 <button type ="button" class="btn btn-danger btn-lg">Delete</button>
             </a>
         </h3>
@@ -38,8 +38,8 @@
                   foreach(Member m in Model.Members){
             <div class="card mb-5" style="width: 18rem;">
                 <div class="card-body h-auto" style="height: 20rem;">
-                    <h5 class="card-title">@m.name</h5>
-                    <p class="card-text">@m.role </p>
+                    <h5 class="card-title">@m.Name</h5>
+                    <p class="card-text">@m.Role </p>
                 </div>
             </div>
               }

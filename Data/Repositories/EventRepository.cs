@@ -15,6 +15,11 @@ namespace FrameworksProject.Data.Repositories
         {
         }
 
+        public Event FindEventWithDetails(int id)
+        {
+            return _context.Event.Include(e => e.Club).Where(e=> e.Id == id).FirstOrDefault();
+        }
+
         public List<string> FindAllCategories()
         {
             return _context.Event.Select(e => e.Category).Distinct().ToList();

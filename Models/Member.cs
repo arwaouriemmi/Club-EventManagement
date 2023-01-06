@@ -11,12 +11,12 @@ namespace FrameworksProject.Models
     public class Member
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        public string name { get; set; }
-        public string role { get; set; }
+        public string Name { get; set; }
+        public string Role { get; set; }
 
-        public Club club { get; set; }
+        public Club Club { get; set; }
 
         public Member()
         {
@@ -24,11 +24,15 @@ namespace FrameworksProject.Models
 
         public Member(string name, string role, Club club)
         {
-            this.name = name;
-            this.role = role;
-            this.club = club;
+            this.Name = name;
+            this.Role = role;
+            this.Club = club;
         }
 
+        public override string ToString()
+        {
+            return Role +": "+ Name;
+        }
 
     }
 }

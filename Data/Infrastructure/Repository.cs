@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -38,10 +39,13 @@ namespace FrameworksProject.Data.Infrastructure
                 throw ex;
             }
         } 
-        public void Update(T entity) {
+        public void Update(T existingEntity, T entity) {
             try
             {
-                _context.Set<T>().Update(entity);
+                if (existingEntity != null)
+                    _context.Entry(existingEntity).State = EntityState.Detached;
+
+                _context.Update(entity);
             }
             catch (Exception ex)
             {
@@ -53,7 +57,8 @@ namespace FrameworksProject.Data.Infrastructure
             {
                 _context.Set<T>().Remove(entity);
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { throw ex;
+            }
         }
 
         public IQueryable<T> FindRange(int beg, int number)
@@ -61,7 +66,7 @@ namespace FrameworksProject.Data.Infrastructure
             return _context.Set<T>().Skip(beg).Take(number);
         }
 
-        int IRepository<T>.getCount()
+        int IRepository<T>.GetCount()
         {
             return _context.Set<T>().Count();
         }

@@ -8,13 +8,17 @@ using System.Threading.Tasks;
 namespace FrameworksProject.Models
 {
     [Table("Event")]
-    public class Event
+    public class Event : IValidatableObject
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Category { get; set; }
+
         public DateTime Date { get; set; }
+        [Required]
         public string Description { get; set; }
         public string StaffForm { get; set; }
         public string ParticipationForm { get; set; }    
@@ -40,6 +44,11 @@ namespace FrameworksProject.Models
         public override string ToString()
         {
             return "id: "+Id.ToString() + " name: "+Name + " category: "+ Category+ " date: " + Date.ToString() + " description: "+ Description + " club : {"+ Club.Name +"}" ;
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            throw new NotImplementedException();
         }
     }
 }
