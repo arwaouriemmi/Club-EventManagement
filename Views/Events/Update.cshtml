@@ -19,18 +19,18 @@
                 <div class="form-group">
                     @Html.Label("name", "Enter the event description: ", new { @class = "control-label lead" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control form-control-lg" })
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control form-control-lg" })
 
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.Label("name", "Enter the event staffForm: ", new { @class = "control-label lead" })
+                    @Html.Label("name", "Enter the event staff Form: ", new { @class = "control-label lead" })
                     <div class="col-md-10">
                         @Html.TextBoxFor(m => m.StaffForm, new { @class = "form-control form-control-lg" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.Label("name", "Enter the event participationForm: ", new { @class = "control-label lead" })
+                    @Html.Label("name", "Enter the event participation Form: ", new { @class = "control-label lead" })
                     <div class="col-md-10">
                         @Html.TextBoxFor(m => m.ParticipationForm, new { @class = "form-control form-control-lg" })
                     </div>
@@ -58,7 +58,7 @@
 
                     <div class="col-md-10">
                         @Html.Label("date", "Enter date : ", new { @class = "control-label" })
-                        @Html.TextBoxFor(m => m.Date, new { placeholder = "dd-MM-yyyy", @class = "form-control form-control-lg" })
+                        @Html.TextBoxFor(m => m.Date, new { @class = "form-control form-control-lg", @type="date" })
                     </div>
                 </div>
                 <div class="form-group">

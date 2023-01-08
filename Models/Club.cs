@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FrameworksProject.Models
 {
     [Table("Club")]
-    public class Club : IValidatableObject
+    public class Club 
     {
         [Key]
         public int Id { get; set; }
@@ -62,9 +62,5 @@ namespace FrameworksProject.Models
                 + " members: {" + mem +"}";
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

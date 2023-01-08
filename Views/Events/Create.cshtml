@@ -1,43 +1,44 @@
 ﻿@{
     ViewData["Title"] = "Create Event";
 }
+@model Event
 
 <h2 class="display-4">Create an Event!!</h2>
 <div class="row">
     <div class="col-12 justify-content-center">
         <section id="CreateForm">
-            @using (Html.BeginForm("Create", "Events", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("Update", "Events", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 <hr />
                 <div class="form-group">
                     @Html.Label("name", "Enter the event name: ", new { @class = "control-label lead" })
                     <div class="col-md-10">
-                        @Html.TextBox("name", "", new { @class = "form-control form-control-lg" })
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control form-control-lg" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("name", "Enter the event description: ", new { @class = "control-label lead" })
                     <div class="col-md-10">
-                        @Html.TextBox("description", "", new { @class = "form-control form-control-lg" })
-                   
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control form-control-lg" })
+
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.Label("name", "Enter the event staffForm: ", new { @class = "control-label lead" })
+                    @Html.Label("name", "Enter the event staff Form: ", new { @class = "control-label lead" })
                     <div class="col-md-10">
-                        @Html.TextBox("staffForm", "", new { @class = "form-control form-control-lg" })
+                        @Html.TextBoxFor(m => m.StaffForm, new { @class = "form-control form-control-lg" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.Label("name", "Enter the event participationForm: ", new { @class = "control-label lead" })
+                    @Html.Label("name", "Enter the event participation Form: ", new { @class = "control-label lead" })
                     <div class="col-md-10">
-                        @Html.TextBox("participationForm", "", new { @class = "form-control form-control-lg" })
+                        @Html.TextBoxFor(m => m.ParticipationForm, new { @class = "form-control form-control-lg" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("name", "Enter the event Image: ", new { @class = "control-label lead" })
                     <div class="col-md-10">
-                        @Html.TextBox("image", "", new { @class = "form-control form-control-lg" })
+                        @Html.TextBoxFor(m => m.Image, new { @class = "form-control form-control-lg" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -54,19 +55,18 @@
                 </div>
                 <div class="form-group">
                     <p class="lead">Date: </p>
-         
+
                     <div class="col-md-10">
                         @Html.Label("date", "Enter date : ", new { @class = "control-label" })
-                        @Html.TextBox("date", "", new { placeholder = "dd-MM-yyyy", @class = "form-control form-control-lg" })
+                        @Html.TextBoxFor(m => m.Date, new { @class = "form-control form-control-lg", @type = "date" })
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-danger btn-lg" />
+                        <input type="submit" value="Update" class="btn btn-danger btn-lg" />
                     </div>
                 </div>
             }
         </section>
     </div>
 </div>
-

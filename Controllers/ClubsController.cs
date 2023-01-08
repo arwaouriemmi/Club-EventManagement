@@ -32,7 +32,7 @@ namespace FrameworksProject.Controllers
         
         public ViewResult Club(int id)
         {
-            Club e = unit.Clubs.Find(id); 
+            Club e = unit.Clubs.FindCompleteClub(id); 
             return View(e);
         }
 
@@ -43,23 +43,22 @@ namespace FrameworksProject.Controllers
             return View(c);
         }
         [HttpPost]
-        public RedirectToActionResult Create(Club club, ICollection<string> ids, ICollection<string> roles, ICollection<string> names)
+        public RedirectToActionResult Create(Club club, ICollection<string> roles, ICollection<string> names)
         {
             if (!ModelState.IsValid)
             {
-                TempData["error"] = "Incorrect Fields";
+                TempData["error"] = "Missing Fields";
                 return RedirectToAction("Create");
             }
             if (club == null) return RedirectToAction("Create");
             else
             {
-                Debug.WriteLine(club.Members.Count());
                 try
                 {
                     club.Members = unit.Clubs.AddMembers(club, roles, names);
                     unit.Clubs.Create(club);
                     unit.Complete();
-                    TempData["success"] = "Club has been created successfulle";
+                    TempData["success"] = "Club has been created successfully";
                 }
                 catch (Exception) { TempData["error"] = "An error has occured"; }
                 return RedirectToAction("Index");
@@ -115,11 +114,6 @@ namespace FrameworksProject.Controllers
             if (createdTo == "") to = 0;
             else int.TryParse(createdTo, out to);
 
-            if ( (from!=0 && (from < 1900 || from > 2022)) || (to != 0 && to < 1900))
-            {
-                TempData["error"] = "Invalid Year";
-                return View("Search");
-            }
             ViewBag.name = name ?? "";
             ViewBag.from = createdFrom;
             ViewBag.to = createdTo;
@@ -135,10 +129,10 @@ namespace FrameworksProject.Controllers
             try
             {
                 Club e = unit.Clubs.Find(id);
+                unit.Clubs.DeleteAllMembers(e);
+                unit.Clubs.DeleteAllEvents(e);
                 unit.Clubs.Delete(e);
                 unit.Complete();
-                Debug.WriteLine(e.ToString());
-
                 TempData["success"] = "Club has been deleted";
             }
             catch (Exception)

@@ -39,6 +39,7 @@ namespace FrameworksProject.Controllers
         [HttpGet]
         public ViewResult Create()
         {
+            Event e = new Event();
             List<string> cat = unit.Events.FindAllCategories();
             cat.Insert(0, "All");
             List<string> club = unit.Events.FindAllClubs();
@@ -46,30 +47,35 @@ namespace FrameworksProject.Controllers
             List<string> selectedClub = new List<string> { club[0] };
             ViewBag.category = new MultiSelectList(cat, selectedCat);
             ViewBag.club = new MultiSelectList(club, selectedClub);
-            return View();
+            return View(e);
         }
         [HttpPost]
-        public IActionResult Create(string name, string category, string club, string date, string description, string staffForm, string participationForm,string  image)
+        public IActionResult Create(Event e, string club, string category)
         {
+            e.Category = category;
+            e.Club = unit.Clubs.FindByCondition(c => c.Name == club).FirstOrDefault();
 
-            DateTime.TryParseExact(date, "dd-MM-yyyy", CultureInfo.InvariantCulture,
-                            DateTimeStyles.None, out DateTime d);
-            List<Club> clubs = unit.Clubs.SearchByNameOrDate(club, 0, 0).ToList();
-            if (d.Year == 0001 && date != null)
+            if (!ModelState.IsValid)
             {
-                TempData["error"] = "Invalid Year";
-                return RedirectToAction("CreateEvent");
+                TempData["error"] = "Missing Fields";
+                return RedirectToAction("Create");
             }
-            Event e = new Event(name, category, d, description, staffForm, participationForm, image, clubs[0]);
-            try
+
+            if (e == null) return RedirectToAction("Create");
+            else
             {
-                unit.Events.Create(e);
-                unit.Complete();
-                TempData["success"] = "Event has been created";
+                try
+                {
+                    unit.Events.Create(e);
+                    unit.Complete();
+                    TempData["success"] = "Event has been created successfully";
+                }
+                catch (Exception) { TempData["error"] = "An error has occured"; }
+                return RedirectToAction("Index");
             }
-            catch(Exception j) { TempData["error"] = j.Message; }
-            return RedirectToAction("Index");
+
         }
+
         [HttpGet]
         public ActionResult Update(int id)
         {
@@ -127,16 +133,11 @@ namespace FrameworksProject.Controllers
         [HttpPost]
         public IActionResult Search(string name, string category, string club, string createdFrom, string createdTo)
         {
-            DateTime.TryParseExact(createdFrom, "dd-MM-yyyy", CultureInfo.InvariantCulture,
+            DateTime.TryParseExact(createdFrom, "yyyy-MM-dd", CultureInfo.InvariantCulture,
                            DateTimeStyles.None, out DateTime from);
-            DateTime.TryParseExact(createdTo, "dd-MM-yyyy", CultureInfo.InvariantCulture,
+            DateTime.TryParseExact(createdTo, "yyyy-MM-dd", CultureInfo.InvariantCulture,
                            DateTimeStyles.None, out DateTime to);
 
-            if ((from.Year==0001 && createdFrom != null) || (to.Year == 0001 && createdTo != null))
-            {
-                TempData["error"] = "Invalid Year";
-                return RedirectToAction("Search");
-            }
             ViewBag.name = name ?? "";
             ViewBag.category = category ?? "";
             ViewBag.club = club ?? "";

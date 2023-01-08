@@ -29,6 +29,41 @@ namespace FrameworksProject.Data.Repositories
             return members;
         }
 
+        public void DeleteAllEvents(Club e)
+        {
+            foreach (var entity in e.Events)
+            {
+                try
+                {
+                    _context.Event.Remove(entity);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public void DeleteAllMembers(Club e)
+        {
+            foreach (var entity in e.Members)
+            {
+                try
+                {
+                    _context.Member.Remove(entity);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public Club FindCompleteClub(int id)
+        {
+            return _context.Club.Where(c => c.Id == id).Include(c => c.Events).Include(c => c.Members).FirstOrDefault();
+        }
+
         public IQueryable<Club> FindCompleteClubs()
         {
             return _context.Club.Include(c => c.Events).Include(c => c.Members);

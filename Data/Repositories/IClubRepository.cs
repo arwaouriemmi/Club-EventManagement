@@ -14,5 +14,8 @@ namespace FrameworksProject.Data.Repositories
 
         Club UpdateMembers(Club c, ICollection<string> id, ICollection<string> role, ICollection<string> name);
         List<Member> AddMembers(Club c, ICollection<string> role, ICollection<string> name);
-            }
+        void DeleteAllMembers(Club e);
+        void DeleteAllEvents(Club e);
+        Club FindCompleteClub(int id);
+    }
 }

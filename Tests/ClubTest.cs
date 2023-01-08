@@ -1,6 +1,6 @@
 ﻿using FrameworksProject.Controllers;
-using FrameworksProject.Data.Infrastructure;
 using FrameworksProject.Models;
+using FrameworksProject.Data.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
