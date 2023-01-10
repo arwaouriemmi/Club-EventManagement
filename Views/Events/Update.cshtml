@@ -13,13 +13,13 @@
                 <div class="form-group">
                     @Html.Label("name", "Enter the event name: ", new { @class = "control-label lead" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m=> m.Name, new { @class = "form-control form-control-lg"})
+                        @Html.TextBoxFor(m=> m.Name, new { @class = "form-control form-control-lg", @required = "required" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("name", "Enter the event description: ", new { @class = "control-label lead" })
                     <div class="col-md-10">
-                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control form-control-lg" })
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control form-control-lg", @required = "required" })
 
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                 <div class="form-group">
                     @Html.Label("name", "Choose a club: ", new { @class = "control-label lead" })
                     <div class="col-md-10">
-                        @Html.ListBox("club", ViewBag.club, new { @class = "form-control form-control-lg" })
+                        @Html.ListBox("club", ViewBag.club, new { @class = "form-control form-control-lg", @required = "required" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -58,7 +58,7 @@
 
                     <div class="col-md-10">
                         @Html.Label("date", "Enter date : ", new { @class = "control-label" })
-                        @Html.TextBoxFor(m => m.Date, new { @class = "form-control form-control-lg", @type="date" })
+                        @Html.TextBoxFor(m => m.Date, new { @class = "form-control form-control-lg", @type="date", @required = "required" })
                     </div>
                 </div>
                 <div class="form-group">

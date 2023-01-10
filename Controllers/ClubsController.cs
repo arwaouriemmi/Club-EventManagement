@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Transactions;
 
 namespace FrameworksProject.Controllers
 {
@@ -45,11 +46,6 @@ namespace FrameworksProject.Controllers
         [HttpPost]
         public RedirectToActionResult Create(Club club, ICollection<string> roles, ICollection<string> names)
         {
-            if (!ModelState.IsValid)
-            {
-                TempData["error"] = "Missing Fields";
-                return RedirectToAction("Create");
-            }
             if (club == null) return RedirectToAction("Create");
             else
             {
@@ -76,11 +72,6 @@ namespace FrameworksProject.Controllers
         [HttpPost]
         public IActionResult Update(Club club, ICollection<string> ids, ICollection<string> roles, ICollection<string> names )
         {
-            if (!ModelState.IsValid)
-            {
-                TempData["error"] = "Incorrect Fields";
-                return RedirectToAction("Update");
-            }
             Club c = unit.Clubs.GetClubWithMembers(club.Id);
             if (club == null) return RedirectToAction("Update");
             else

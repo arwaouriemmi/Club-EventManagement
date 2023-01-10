@@ -18,7 +18,6 @@ namespace FrameworksProject.Data.Infrastructure
         {
             get
             {
-
                 if (this.clubs == null)
                 {
                     this.clubs = new ClubRepository(_context);

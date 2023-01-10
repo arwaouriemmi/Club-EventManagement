@@ -1,7 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Clubs";
     string alt_image = "https://i1.wp.com/insatpress.tn/wp-content/uploads/2020/04/44104159_2181495298587811_5543566004648411136_o.jpg?resize=1000%2C600&ssl=1";
-
 }
 @model Club
 
@@ -25,7 +24,7 @@
         </h3>
     </div>
     <div class="col-6">
-        <img src="@Model.Logo" alt="Venue Image" />
+        <img src=@(Model.Logo ?? alt_image) alt="Image" style="height:250px; width:400px;"/>
     </div>
 </div>
 
