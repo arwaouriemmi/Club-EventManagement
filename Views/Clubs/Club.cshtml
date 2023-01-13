@@ -6,33 +6,31 @@
 
 
 <div class="row">
-    <div class="col-6">
+    <div class="col-8">
         <h1 class="monospace">
             @Model.Name
         </h1>
         <p class="subtitle">
-            ID: @Model.Id
+            <h3 class="lead">ID: </h3> @Model.Id
         </p>
         <div class="row">
-            <div class="d-flex justify-content-around flex-wrap">
-                <div class="card mb-5" style="width: 18rem;">
-                    Description:
+                <div class="col-7 mb-5" style="width: 18rem;">
+                    <h3 class="lead">Description: </h3>
                     <div class="card-body h-auto" style="height: 20rem;">
                         <p class="card-text">@Model.Description</p>
                        
                     </div>
-                    Website:
+                    <h3 class="lead">Website:</h3>
                     <div class="card-body h-auto" style="height: 20rem;">
-                        <a href=@Model.Website></a>
+                        <a href=@Model.Website>@(Model.Website ?? "Rien à afficher")</a>
                         
                     </div>
-                    Creation Year:
+                    <h3 class="lead">Creation Year: </h3>
                     <div class="card-body h-auto" style="height: 20rem;">
-                        <p class="card-text">@Model.CreationYear</p>
+                        <p class="card-text">@(Model.CreationYear.ToString() ?? "Rien à afficher" )</p>
                     </div>
 
                 </div>
-            </div>
         </div>
 
         <h3 class="my-2">
@@ -44,7 +42,7 @@
             </a>
         </h3>
     </div>
-    <div class="col-6">
+    <div class="col-4">
         <img src=@(Model.Logo ?? alt_image) alt="Image" style="height:250px; width:400px;"/>
     </div>
 </div>

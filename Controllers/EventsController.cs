@@ -33,7 +33,7 @@ namespace FrameworksProject.Controllers
         }
         public ViewResult Event(int id)
         {
-                Event e = unit.Events.Find(id);
+                Event e = unit.Events.FindEventWithDetails(id);
                 return View(e);
         }
         [HttpGet]
