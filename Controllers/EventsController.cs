@@ -36,6 +36,7 @@ namespace FrameworksProject.Controllers
                 Event e = unit.Events.FindEventWithDetails(id);
                 return View(e);
         }
+
         [HttpGet]
         public ViewResult Create()
         {
@@ -55,12 +56,6 @@ namespace FrameworksProject.Controllers
             e.Category = category;
             e.Club = unit.Clubs.FindByCondition(c => c.Name == club).FirstOrDefault();
 
-            if (!ModelState.IsValid)
-            {
-                TempData["error"] = "Missing Fields";
-                return RedirectToAction("Create");
-            }
-
             if (e == null) return RedirectToAction("Create");
             else
             {
@@ -71,7 +66,7 @@ namespace FrameworksProject.Controllers
                     TempData["success"] = "Event has been created successfully";
                 }
                 catch (Exception) { TempData["error"] = "An error has occured"; }
-                return RedirectToAction("Index");
+                return RedirectToAction("Event", new { id = e.Id });
             }
 
         }
@@ -108,7 +103,7 @@ namespace FrameworksProject.Controllers
                     TempData["success"] = "Event has been updated";
                 }
                 catch (Exception j) { TempData["error"] = j.Message; }
-                return RedirectToAction("Index");
+                return RedirectToAction("Event", new { id = c.Id });
             }
 
         }

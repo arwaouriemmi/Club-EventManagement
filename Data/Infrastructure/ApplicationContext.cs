@@ -15,7 +15,7 @@ namespace FrameworksProject.Data.Infrastructure
         private static ApplicationContext Instantiate_ApplicationContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
-            optionsBuilder.UseSqlite(@"Data Source = D:\Projects\.NET\FrameworksProject\database.db");
+            optionsBuilder.UseSqlite(@"Data Source = C:\Users\onsou\Desktop\FrameworksProject\database.db");
             
 
 

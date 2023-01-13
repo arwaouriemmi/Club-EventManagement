@@ -47,9 +47,9 @@
                     <img class="d-block" style="height:500px; width:1000px;" src=@(e.Image ?? alt_image) alt="">
                     <div class="carousel-caption d-none d-md-block">
                         <h5 class="text-black-50">
-                            <a href="events/@e.Id">@e.Name</a>
+                            <a href="events/event/@e.Id">@e.Name</a>
                         </h5>
-                        <p class="text-black-50">Happening the @e.Date.ToString("dd-MM-yyyy") @(e.Date.ToString("HH:mm")!="00:00"? " starts at "+ e.Date.ToString("HH:mm"): "") </p>
+                        <p class="text-black-50">Happening the @e.Date.ToString("dd-MM-yyyy") </p>
                     </div>
                 </div>
             }

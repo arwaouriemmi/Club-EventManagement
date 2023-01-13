@@ -57,7 +57,7 @@ namespace FrameworksProject.Controllers
                     TempData["success"] = "Club has been created successfully";
                 }
                 catch (Exception) { TempData["error"] = "An error has occured"; }
-                return RedirectToAction("Index");
+                return RedirectToAction("Club", new { id = club.Id });
             }
         }
         [HttpGet]
@@ -84,7 +84,7 @@ namespace FrameworksProject.Controllers
                     TempData["success"] = "Club has been updated";
                 }
                 catch (Exception j) { TempData["error"] = j.Message; }
-                return RedirectToAction("Index");
+                return RedirectToAction("Club", new { id = c.Id });
             }
 
         }

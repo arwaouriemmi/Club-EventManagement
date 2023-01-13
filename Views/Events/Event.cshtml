@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-8">
         <h1 class="monospace">
-            @Model.Name 
+            @Model.Name
         </h1>
         <p class="subtitle">
             <h3 class="lead">ID: </h3>  @Model.Id
@@ -17,37 +17,38 @@
         <p class="subtitle">
             <h3 class="lead">Category: </h3> @Model.Category
         </p>
-        <p class="card-text">Happening the @(Model.Date.ToString("dd-MM-yyyy")) </p>
+        <h3 class="lead">Date: </h3>
+        <p class="card-text"> @(Model.Date.ToString("dd-MM-yyyy")) </p>
         <div class="row">
             <div class="col-8 mb-5" style="width: 18rem;">
                 <h3 class="lead">
                     Description:
-                    </h3>
-                    <div class="card-body h-auto" style="height: 20rem;">
-                        <p class="card-text">@Model.Description</p>
-                    </div>
-                    <h3 class="lead">
-                        Staff Form:
-                    </h3>
-                    <div class="card-body h-auto" style="height: 20rem;">
-                        <a class="card-text" href="@(Model.StaffForm?? "")">@(Model.StaffForm?? "Rien à afficher" )</a>
-                    </div>
-                    <h3 class="lead">
-                        Participation Form:
-                    </h3>
-                    <div class="card-body h-auto" style="height: 20rem;">
-                        <a class="card-text" href="@(Model.ParticipationForm?? "" )">@(Model.ParticipationForm?? "Rien à afficher" )</a>
-                    </div>
+                </h3>
+                <div class="card-body h-auto" style="height: 20rem;">
+                    <p class="card-text">@Model.Description</p>
+                </div>
+                <h3 class="lead">
+                    Staff Form:
+                </h3>
+                <div class="card-body h-auto" style="height: 20rem;">
+                    <a class="card-text" href="@(Model.StaffForm?? "")">@(Model.StaffForm?? "Rien à afficher" )</a>
+                </div>
+                <h3 class="lead">
+                    Participation Form:
+                </h3>
+                <div class="card-body h-auto" style="height: 20rem;">
+                    <a class="card-text" href="@(Model.ParticipationForm?? "" )">@(Model.ParticipationForm?? "Rien à afficher" )</a>
+                </div>
 
-                    <h3 class="lead">
-                        Club
-                    </h3>
-                    <div class="card mb-5" style="width: 18rem;">
-                        <div class="card-body h-auto" style="height: 20rem;">
-                            <h5 class="card-title">@Model.Club.Name</h5>
-                            <a asp-area="" asp-controller="Clubs" asp-action="club" asp-route-id="@Model.Club.Id" class="btn btn-danger">See Details</a>
-                        </div>
+                <h3 class="lead">
+                    Club
+                </h3>
+                <div class="card mb-5" style="width: 18rem;">
+                    <div class="card-body h-auto" style="height: 20rem;">
+                        <h5 class="card-title">@Model.Club.Name</h5>
+                        <a asp-area="" asp-controller="Clubs" asp-action="club" asp-route-id="@Model.Club.Id" class="btn btn-danger">See Details</a>
                     </div>
+                </div>
 
             </div>
         </div>

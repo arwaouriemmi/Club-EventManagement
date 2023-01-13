@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\.NET\\FrameworksProject\\FrameworksProject.csproj": {}
+    "C:\\Users\\onsou\\Desktop\\FrameworksProject\\FrameworksProject.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\.NET\\FrameworksProject\\FrameworksProject.csproj": {
+    "C:\\Users\\onsou\\Desktop\\FrameworksProject\\FrameworksProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\.NET\\FrameworksProject\\FrameworksProject.csproj",
+        "projectUniqueName": "C:\\Users\\onsou\\Desktop\\FrameworksProject\\FrameworksProject.csproj",
         "projectName": "FrameworksProject",
-        "projectPath": "D:\\Projects\\.NET\\FrameworksProject\\FrameworksProject.csproj",
+        "projectPath": "C:\\Users\\onsou\\Desktop\\FrameworksProject\\FrameworksProject.csproj",
         "packagesPath": "C:\\Users\\onsou\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\.NET\\FrameworksProject\\obj\\",
+        "outputPath": "C:\\Users\\onsou\\Desktop\\FrameworksProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\onsou\\AppData\\Roaming\\NuGet\\NuGet.Config",
