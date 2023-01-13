@@ -17,12 +17,29 @@
         <p class="subtitle">
             Category:  @Model.Category
         </p>
+        <p class="card-text">Happening the @(Model.Date.ToString("dd-MM-yyyy")) </p>
         <div class="row">
             <div class="d-flex justify-content-around flex-wrap">
                 <div class="card mb-5" style="width: 18rem;">
+                    Description:
                     <div class="card-body h-auto" style="height: 20rem;">
                         <p class="card-text">@Model.Description</p>
                     </div>
+                    StaffForm:
+                    <div class="card-body h-auto" style="height: 20rem;">
+                        <p class="card-text">@Model.StaffForm</p>
+                    </div>
+                    ParticipationForm:
+                    <div class="card-body h-auto" style="height: 20rem;">
+                        <p class="card-text">@Model.ParticipationForm</p>
+                    </div>
+                    Club:
+                    <div class="card-body h-auto" style="height: 20rem;">
+                        <div class="card-body h-auto" style="height: 20rem;">
+                            <a asp-area="" asp-controller="Clubs" asp-action="Club" asp-route-id="@Model.Club.Id" class="btn btn-danger">See Club</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
