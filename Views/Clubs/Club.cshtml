@@ -8,18 +8,39 @@
 <div class="row">
     <div class="col-6">
         <h1 class="monospace">
-             @Model.Name
+            @Model.Name
         </h1>
         <p class="subtitle">
             ID: @Model.Id
         </p>
-   
+        <div class="row">
+            <div class="d-flex justify-content-around flex-wrap">
+                <div class="card mb-5" style="width: 18rem;">
+                    Description:
+                    <div class="card-body h-auto" style="height: 20rem;">
+                        <p class="card-text">@Model.Description</p>
+                       
+                    </div>
+                    Website:
+                    <div class="card-body h-auto" style="height: 20rem;">
+                        <a href=@Model.Website></a>
+                        
+                    </div>
+                    Creation Year:
+                    <div class="card-body h-auto" style="height: 20rem;">
+                        <p class="card-text">@Model.CreationYear</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <h3 class="my-2">
             <a asp-area="" asp-controller="Clubs" asp-action="update" asp-route-id="@Model.Id">
                 <button type="button" class="btn btn-danger btn-lg">Edit</button>
             </a>
             <a href="/Clubs/delete/@Model.Id">
-                <button type ="button" class="btn btn-danger btn-lg">Delete</button>
+                <button type="button" class="btn btn-danger btn-lg">Delete</button>
             </a>
         </h3>
     </div>
@@ -57,15 +78,17 @@
     <div class="d-flex justify-content-around flex-wrap">
         @{
             foreach(Event e in Model.Events){
-                    <div class="card mb-5" style="width: 18rem;">
-                        <img class="card-img-top" style="height: 20rem; width:100%;" src=@(alt_image) alt="event image">
-                        <div class="card-body h-auto" style="height: 20rem;">
-                            <h5 class="card-title">@e.Name</h5>
-                            <p class="card-text">Happening the (@e.Date.ToString("dd-MM-yyyy") + (@e.Date.ToString("HH:mm")!="00:00" ? " starts at "+ @e.Date.ToString("HH:mm") : ""))</p>
-                            <a href="/Events/SelectEvent?id=@e.Id" class="btn btn-danger">See Details</a>
-                        </div>
-                    </div>
+            <div class="card mb-5" style="width: 18rem;">
+                <img class="card-img-top" style="height: 20rem; width:100%;" src=@(alt_image) alt="event image">
+                <div class="card-body h-auto" style="height: 20rem;">
+                    <h5 class="card-title">@e.Name</h5>
+                    <p class="card-text">Happening the @(e.Date.ToString("dd-MM-yyyy")) </p>
+                    <a asp-area="" asp-controller="Events" asp-action="Event" asp-route-id="@e.Id" class="btn btn-danger">See Details</a>
+
+                </div>
+            </div>
         }
         }
     </div>
+   
 </div>
