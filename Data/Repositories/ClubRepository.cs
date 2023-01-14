@@ -79,7 +79,10 @@ namespace FrameworksProject.Data.Repositories
 
             if (to == 0) to = 3000;
             
+            if (name=="")
             return _context.Club.Where(c=> c.Name == name && (c.CreationYear>=from && c.CreationYear <=to));
+            else
+                return _context.Club.Where(c=> c.CreationYear >= from && c.CreationYear <= to);
 
 
         }

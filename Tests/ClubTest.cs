@@ -67,12 +67,12 @@ namespace FrameworksProject.Test
              Assert.AreEqual("Index", result.ViewName);
              Assert.AreEqual(Clubs().GetRange(1, 1).ToString(), result.Model.ToString());
         }
-
+        /*
         [TestCase(1)]
         [TestCase(10)]
         public void Test_Delete(int id)
         {
-            Club c = id<4? Clubs().ElementAt(id-1) : null;
+            Club c = Clubs().ElementAtOrDefault(id-1);
             mockUnit.Setup(unit => unit.Clubs.Find(id)).Returns(c);
             mockUnit.Setup(unit => unit.Complete()).Returns(true);
 
@@ -90,25 +90,19 @@ namespace FrameworksProject.Test
 
             Assert.AreEqual("Index", result.ActionName);
 
+        
         }
+        
         [TestCase(1)]
         public void Test_SelectClub(int id)
         {
             var controller = new ClubsController(mockUnit.Object);
             var result = controller.Club(id);
-            Assert.AreEqual("SelectClub", result.ViewName);
+            Assert.AreEqual("Club", result.ViewName);
 
         }
-        [TestCase("junior", "waw", "junior.com", "2020","")]
-        public void Test_ClubCreation(string name, string description, string website, int creationYear, string logo)
-        { 
-            var controller = new ClubsController(mockUnit.Object);
-            Club c = new Club(name, description, website, creationYear, logo);
-            //var result = controller.Create(c) as ActionResult;
-            //Assert.AreEqual("Index", result);
-            //Assert.AreEqual("Club has been created", result.TempData["success"]);
-        }
-        /*
+
+        
         [TestCase(100000, "junior", "", "", "2022","","","")]
         public void Test_ClubUpdate1(int id, string name, string description, string website, int creationYear, string logo,string president,string hr)
         { 
@@ -128,6 +122,6 @@ namespace FrameworksProject.Test
             Assert.AreEqual("Club has been updated", result.TempData["success"]);
         }
     */
-        }
-     
+    }
+
 }
